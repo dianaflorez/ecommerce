@@ -1,0 +1,268 @@
+main > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    font-size: .9em;
+    height: 60px;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+.center {
+    border: 2px solid pink;
+    margin: 0 auto;
+    flex: 1;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    content: '';
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 2px 4px;
+    background: transparent;
+}
+
+a.asc:after {
+    border-bottom: solid 7px #212529;
+    border-top-width: 0;
+}
+
+a.desc:after {
+    border-top: solid 7px #212529;
+    border-bottom-width: 0;
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding-top: 7px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+
+.td-left{
+    text-align: end;
+
+}
+
+.page-header0{
+    background-color: #eeeeee !important;
+    min-height: 100vh;
+    max-height: 1000px;
+    display: flex !important;
+    height: 100%;
+    color: #fff;
+    position: relative;
+    padding: 15vh 0 !important;
+}
+
+.help-block{
+    color: rgb(198, 43, 43);
+    font-weight: bold;
+}
+
+/* LOADING */
+#loader
+{
+    position:fixed;
+    width:100%;height:100%;
+    z-index:999;
+    background-color:#dbdcdd;
+
+}
+
+#loader img
+{
+    display:block;
+    position:absolute;
+    top:50%;left:50%;
+
+}
+
+/*  CONFIGURACION DE AUTOCOMPLETE */
+.contrato-form input,
+.contrato-form select,
+.contrato-form textarea,
+.contrato-form .select2-container--krajee .select2-selection {
+    font-size: 16px !important;
+}
+
+.contrato-form .bmd-form-group, .contrato-form .bmd-label-static, .contrato-form .btn {  
+    font-size: 16px;
+}
+
+.select2-container--krajee-bs3 .select2-results__option--highlighted[aria-selected] {
+    font-size: 16px;
+}
+
+.select2-container--krajee-bs3 .select2-search--dropdown .select2-search__field {
+    font-size: 16px;
+}
+
+.contrato-form h4{
+    font-size: 18px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 16px !important;
+}
+
+.contrato-modificatiorio-form .control-label, .contrato-modificatiorio-form .btn {
+    font-size: 13px !important;
+}
+
+
+
+/*** TABLE ***/
+.table thead tr th {
+    font-size: 1.063rem;
+    font-weight: initial;
+  }
+
+  .table-consorcio{
+    font-size: 12px !important;
+  }
+
+  .table-extra thead tr th, .table-extra td {
+    font-size: 13px !important;
+  }
+
+  /**** MODAL ****/
+#modal-consorcio .close:not(:disabled):not(.disabled) {
+    font-size: 24px;
+}
+#modal-consorcio .form-group .bmd-label-static {
+    top: -10px;
+    font-size: 14px;
+}
+
+#modal-consorcio .btn:not(:disabled):not(.disabled) {
+    font-size: 12px;
+}
+
+#modal-convenio .close:not(:disabled):not(.disabled) {
+    font-size: 24px;
+}
+#modal-convenio .form-group .bmd-label-static {
+    top: -10px;
+    font-size: 14px;
+}
+
+#modal-convenio .btn:not(:disabled):not(.disabled) {
+    font-size: 12px;
+}
+
+
+.conductor-form #conductor-identification, .conductor-form #conductor-edad{
+    margin-top: 22px !important;
+}
+
+.conductor-form #conductor-fecha_nacimiento {
+    margin-top: 22px !important;
+}
+
+.dashboard-operacion{
+    overflow-x: auto;
+}
+
+.mi-checkbox-estilo {
+    font-size: 18px;
+    color: black;
+}
+
+/* BORDE PARA MODAL LIST */
+.list-group-item-borde{
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* SCROLL GRUESO */
+/* Scroll personalizado para el modal de vehículos */
+.scroll-grueso {
+    scrollbar-width: thick; /* Firefox */
+    scrollbar-color: #888 #eee; /* thumb y track */
+}
+
+/* Chrome, Edge, Safari */
+.scroll-grueso::-webkit-scrollbar {
+    width: 12px;
+}
+
+.scroll-grueso::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+.scroll-grueso::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+    border: 2px solid #eee;
+}
+
+.scroll-grueso::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/*** CONTRATO ****/
+.emp-convenio-item{
+    font-size: 16px !important;
+}
+
+#empresas-convenio-lista{
+    border: 1px solid #edeaea !important;
+    border-radius: 7px !important;
+}
+
+  
