@@ -14,6 +14,7 @@ class Menu
         $showAdmin = false;
         $showUsuarios = false;
         $showUsuariosAll = false;
+        $products = false;
        
 
         // Ajustar visibilidad según rol
@@ -22,28 +23,33 @@ class Menu
             $showAdmin = true;
             $showUsuarios = true;
             $showUsuariosAll = true;
+            $products = true;
            
         
         } elseif ($role == 'admin') {
             $showDashboard = true;
             $showAdmin = true;
             $showUsuarios = true;
+            $products = true;
            
-        } elseif ($role == 'distribuidor') {
-
+        } elseif ($role == 'distributor') {
+            $products = true;
         } 
 
         $menu = RCEmenu::widget(
             [
                 'items' => [
                     [ 'label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/site/index'], 'visible' => $showDashboard ],
+                    ['label' => 'Products', 'icon' => 'shopping_cart', 'url' => ['product/products'], 'visible' => $products],
+                    ['label' => 'Invoices', 'icon' => 'receipt_long', 'url' => ['invoice/index'], 'visible' => $products],
                    
                     // Menu Admin
                     ['label' => 'Administrador', 'icon' => 'people', 'visible' => $showAdmin, 
                         'items' => [
-                            ['label' => 'Usuario', 'icon' => 'person', 'url' => ['usuario/index'], 'visible' => $showUsuarios],
-                            ['label' => 'Usuario/Contratos', 'icon' => 'person', 'url' => ['usuariocontrato/index'], 'visible' => $showUsuarios],
-                            ['label' => 'All User', 'icon' => 'person', 'url' => ['usuario/indexall'], 'visible' => $showUsuariosAll],
+                            ['label' => 'Usuarios', 'icon' => 'person', 'url' => ['usuario/index'], 'visible' => $showUsuarios],
+                            ['label' => 'Products', 'icon' => 'shopping_cart', 'url' => ['product/index']],
+                            //['label' => 'Usuario/Contratos', 'icon' => 'person', 'url' => ['usuariocontrato/index'], 'visible' => $showUsuarios],
+                            //['label' => 'All User', 'icon' => 'person', 'url' => ['usuario/indexall'], 'visible' => $showUsuariosAll],
                             //['label' => 'Empresas', 'icon' => 'business', 'url' => ['empresa/index']],
                     ]],
                  

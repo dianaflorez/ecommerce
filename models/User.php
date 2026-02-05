@@ -54,7 +54,17 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
   
     public static function isDistribuidor($id)
     {
-       if (Usuario::findOne(['id' => $id, 'active' => '1', 'role' => 'distribuidor'])){
+       if (Usuario::findOne(['id' => $id, 'active' => '1', 'role' => 'distributor'])){
+        return true;
+       } else {
+  
+        return false;
+       }
+    }
+
+    public static function isCliente($id)
+    {
+       if (Usuario::findOne(['id' => $id, 'active' => '1', 'role' => 'cliente'])){
         return true;
        } else {
   

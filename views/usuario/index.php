@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -40,8 +41,23 @@ $this->params['breadcrumbs'][] = $this->title;
             //'document_number',
             'cod_country',
             //'parent_id',
-            'role',
-            'status',
+            // 'role',
+            // 'status',
+            [
+                'attribute' => 'role',
+                'filter' => \app\models\Usuario::rolesList(),
+                'value' => function ($model) {
+                    return \app\models\Usuario::rolesList()[$model->role] ?? $model->role;
+                },
+            ],
+            [
+                'attribute' => 'status',
+                'filter' => \app\models\Usuario::statusList(),
+                'value' => function ($model) {
+                    return \app\models\Usuario::statusList()[$model->status] ?? $model->status;
+                },
+            ],
+            
             //'active',
             //'active_desc:ntext',
             //'auth_key',

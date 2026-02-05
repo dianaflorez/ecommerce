@@ -265,4 +265,73 @@ a.desc:after {
     border-radius: 7px !important;
 }
 
+/** CARD PRODUCTS **/
+.card-header-image img {
+    /*height: 370px;       /* puedes ajustar: 200 / 240 */
+    /*width: 100%;
+    /* object-fit: cover;   /* magia aquí */
+}
+
+.card-product{
+    min-height: 500px !important;
+}
+
+
+/* Boton flotante*/
+/* .btn-cart-flotante{
+    position: fixed !important;
+    top: 83px !important;
+    right: 70px !important;
+    z-index: 90;
+    padding: 39px;
+    font-size: 33px !important;
+    font-weight: bold !important;
+} */
+
+.btn-cart-flotante {
+    padding: 39px;
+    font-size: 33px !important;
+    font-weight: bold !important;
+}
+
+
+.cart-badge {
+    animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(0.6); }
+    100% { transform: scale(1); }
+}
+
+
+.cart-floating-wrapper {
+    position: fixed;
+    top: 83px;
+    right: 70px;
+    z-index: 90;
+}
+
+
+/* IMPORTANTE: el badge ya no está dentro del botón */
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #f44336;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+}
+
+
+
+
   

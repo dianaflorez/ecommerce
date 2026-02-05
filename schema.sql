@@ -1,7 +1,7 @@
 CREATE TYPE user_role AS ENUM ('admin', 'distributor','cliente');
 CREATE TYPE user_status AS ENUM ('pending', 'approved', 'rejected', 'active');
-CREATE TYPE order_type AS ENUM ('initial', 'regular');
-CREATE TYPE order_status AS ENUM ('pending', 'paid', 'cancelled');
+CREATE TYPE invoice_type AS ENUM ('initial', 'regular');
+CREATE TYPE invoice_status AS ENUM ('pending', 'paid', 'cancelled');
 CREATE TYPE approval_action AS ENUM ('approved', 'rejected');
 
 
@@ -50,50 +50,51 @@ CREATE TABLE usuario (
 );
 
 
-CREATE TABLE products (
+CREATE TABLE product (
     id SERIAL PRIMARY KEY,
+    image     character varying(177),
     name VARCHAR(150) NOT NULL,
     description TEXT,
     price NUMERIC(10,2) NOT NULL,
-    is_initial_kit BOOLEAN DEFAULT FALSE,
-    active BOOLEAN DEFAULT TRUE,
+    is_initial_kit BOOLEAN,
+    active BOOLEAN,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
-CREATE TABLE orders (
+CREATE TABLE invoice (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     total NUMERIC(10,2) NOT NULL,
-    type order_type NOT NULL,
-    status order_status NOT NULL DEFAULT 'pending',
+    type invoice_type NOT NULL,
+    status invoice_status NOT NULL DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_order_user
+    CONSTRAINT fk_invoice_user
         FOREIGN KEY (user_id)
         REFERENCES usuario(id)
         ON DELETE CASCADE
 );
 
-CREATE TABLE order_items (
+CREATE TABLE invoice_item (
     id SERIAL PRIMARY KEY,
-    order_id INTEGER NOT NULL,
+    invoice_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL CHECK (quantity > 0),
     price NUMERIC(10,2) NOT NULL,
 
-    CONSTRAINT fk_item_order
-        FOREIGN KEY (order_id)
-        REFERENCES orders(id)
+    CONSTRAINT fk_item_invoice
+        FOREIGN KEY (invoice_id)
+        REFERENCES invoice(id)
         ON DELETE CASCADE,
 
     CONSTRAINT fk_item_product
         FOREIGN KEY (product_id)
-        REFERENCES products(id)
+        REFERENCES product(id)
 );
 
 
-CREATE TABLE approval_logs (
+CREATE TABLE approval_log (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     admin_id INTEGER NOT NULL,
@@ -111,7 +112,7 @@ CREATE TABLE approval_logs (
 );
 
 CREATE INDEX idx_usuario_parent_id ON usuario(parent_id);
-CREATE INDEX idx_orders_user_id ON orders(user_id);
+CREATE INDEX idx_invoice_user_id ON invoice(user_id);
 CREATE UNIQUE INDEX idx_usuario_usercode ON usuario(usercode);
 
 CREATE OR REPLACE FUNCTION update_timestamp()

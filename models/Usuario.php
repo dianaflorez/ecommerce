@@ -323,4 +323,24 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuario::className(), ['id' => 'user_updated']);
     }
+    public static function rolesList()
+    {
+        return [
+            'cliente' => 'Cliente',
+            'distributor' => 'Distribuidor',
+            'admin' => 'Administrador',
+            //'superadmin' => 'Super Administrador',
+        ];
+    }
+
+    public static function statusList()
+    {
+        return [
+            'pending' => 'Pendiente', 
+            'approved' => 'Aprobado', 
+            'rejected' => 'Rechazado', 
+            'active' => 'Activo',
+        ];
+    }
+
 }

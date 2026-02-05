@@ -2,14 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\Usuario;
-use app\models\UsuarioSearch;
+use app\models\Product;
+use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use yii\helpers\ArrayHelper;
-
+// Upload de imágenes
+use app\models\FormUploadImg;
+use yii\web\UploadedFile;
 
 // For AccessControl
 use app\models\User;
@@ -17,9 +18,9 @@ use yii\filters\AccessControl;
 use Yii;
 
 /**
- * UsuarioController implements the CRUD actions for Usuario model.
+ * ProductController implements the CRUD actions for Product model.
  */
-class UsuarioController extends Controller
+class ProductController extends Controller
 {
     /**
      * @inheritDoc
@@ -87,13 +88,13 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Lists all Usuario models.
+     * Lists all Product models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new UsuarioSearch();
+        $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -103,7 +104,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Displays a single Usuario model.
+     * Displays a single Product model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -115,45 +116,76 @@ class UsuarioController extends Controller
         ]);
     }
 
+    public function actionInfo($id)
+    {
+        return $this->render('info', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionProducts()
+    {
+        return $this->render('products', [
+            'products' => Product::find()->all(),
+        ]);
+    }
+
     /**
-     * Creates a new Usuario model.
+     * Creates a new Product model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Usuario();
-        $usuarios = Usuario::find()
-                ->where(['active' => 1])
-                ->andWhere(['not in', 'role', ['admin', 'cliente']])
-                ->andWhere(['not', ['id' => $model->id]])
-                ->orderBy('name ASC')
-                ->all();
+        $model = new Product();
+        $model->is_initial_kit = 0;
+        $model->active = 1;
+
+        $uploadModel = new FormUploadImg();
+
+        if ($model->load(Yii::$app->request->post())) {
+    
+             $uploadModel->file = UploadedFile::getInstance($uploadModel, 'file');
+           
+            if ($uploadModel->file && $uploadModel->validate()) {
+                $path = 'archivos/products/';
+                $nameimg = 'pr';
+                $imagePath = $uploadModel->upload($path, $nameimg);
+    
+                if ($imagePath === false) {
+                    return $this->render('create', [
+                        'model' => $model,
+                        'uploadModel' => $uploadModel
+                    ]);
+                }
+    
+                $model->image = $imagePath;
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    $error = json_encode( $model->getErrors() );
+                    $msg = "No se pudo editar la información $error";
+                    Yii::$app->session->setFlash('error', 'Error al guardar el conductor. '.$msg);
+
+                }
+            } else {
+                $error = json_encode( $uploadModel->getErrors() );
+                $msg = "No se pudo subir la imagen $error";
+                Yii::$app->session->setFlash('error', 'Error al subir la imagen. '.$msg);
+            }
+    
             
-        $listaUsuarios = ArrayHelper::map(
-            $usuarios,
-            'id',
-            function ($user) {
-                return $user->name . ' ' . $user->lastname . ' (' . $user->usercode . ')';
-            }
-        );
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
         }
-
+    
         return $this->render('create', [
             'model' => $model,
-            'listaUsuarios' => $listaUsuarios,
+            'uploadModel' => $uploadModel
         ]);
+    
     }
 
     /**
-     * Updates an existing Usuario model.
+     * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -162,20 +194,6 @@ class UsuarioController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $usuarios = Usuario::find()
-                ->where(['active' => 1])
-                ->andWhere(['not in', 'role', ['admin', 'cliente']])
-                ->andWhere(['not', ['id' => $model->id]])
-                ->orderBy('name ASC')
-                ->all();
-            
-        $listaUsuarios = ArrayHelper::map(
-            $usuarios,
-            'id',
-            function ($user) {
-                return $user->name . ' ' . $user->lastname . ' (' . $user->usercode . ')';
-            }
-        );
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -183,12 +201,11 @@ class UsuarioController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'listaUsuarios' => $listaUsuarios,
         ]);
     }
 
     /**
-     * Deletes an existing Usuario model.
+     * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -202,15 +219,15 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Finds the Usuario model based on its primary key value.
+     * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Usuario the loaded model
+     * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Usuario::findOne(['id' => $id])) !== null) {
+        if (($model = Product::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

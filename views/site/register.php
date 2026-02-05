@@ -8,7 +8,7 @@ $this->title = 'Registro';
 ?>
 
 <div class="site-register">
-    <div class="col-md-6 ml-auto mr-auto">
+    <div class="col-md-8 ml-auto mr-auto">
         <div class="card">
             <div class="card-header card-header-info text-center">
                 <h4 class="card-title">Registro</h4>
@@ -17,7 +17,7 @@ $this->title = 'Registro';
             <?php $form = ActiveForm::begin(); ?>
 
             <div class="card-body">
-
+                <br>
                 <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'lastname')->textInput() ?>
                 <?= $form->field($model, 'identification')->textInput() ?>

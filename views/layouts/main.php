@@ -47,8 +47,10 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/ricar2ce/yii
 </head>
 	<!-- <body class="sidebar-mini"> -->
     <!-- When the page is loaded, the loader becomes hidden -->
-    <body onload="$('#loader').hide();" class="sidebar-mini">
-    <div id="loader"><img src="<?= Url::to('@web/images/loading.gif') ?>" alt="Loading"/></div>
+    <!-- <body onload="$('#loader').hide();" class="sidebar-mini"> -->
+    <body class="sidebar-mini">
+
+    <!-- <div id="loader"><img src="<?= Url::to('@web/images/loading.gif') ?>" alt="Loading"/></div> -->
 
 
 		<?php $this->beginBody() ?>
@@ -60,8 +62,33 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/ricar2ce/yii
 		    <div class="main-panel">
 		    	<?= $this->render('header.php') ?>
 			    <div class="content">
+                
+                    <!-- Cart BUTTON FIXED -->
+                    <?php
+                    $cartCount = 0;
+                    if (!empty($_SESSION['cart'])) {
+                        foreach ($_SESSION['cart'] as $item) {
+                            $cartCount += $item['item_quantity'];
+                        }
+                    }
+                    ?>
+
+                    <div class="cart-floating-wrapper">
+                        <?= Html::a(
+                            '<i class="material-icons">shopping_cart</i>',
+                            ['/invoice/cart'],
+                            ['class' => 'btn btn-warning btn-fab btn-fab-lg btn-round btn-cart-flotante']
+                        ) ?>
+
+                        <?php if ($cartCount > 0): ?>
+                            <span class="cart-badge"><?= $cartCount ?></span>
+                        <?php endif; ?>
+                    </div>
+
+
+
 			    	<div class="container">
-                  <?= Noti::widget() ?>
+                        <?= Noti::widget() ?>
             			<?= $content ?>
 			    	</div>
 			    </div>
@@ -83,8 +110,26 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/ricar2ce/yii
             });
 
         </script>
+
+       
+
+
+            
+        </div>
 	</body>
 </html>
 <?php $this->endPage() ?>
-
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5eb8a3d88ee2956d739fdb4f/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 <?php } ?>

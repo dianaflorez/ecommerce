@@ -47,6 +47,8 @@ class UsuarioSearch extends Usuario
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]],
+            'pagination' => ['pageSize' => 50],
         ]);
 
         $this->load($params, $formName);
@@ -67,6 +69,9 @@ class UsuarioSearch extends Usuario
             'user_updated' => $this->user_updated,
         ]);
 
+        $query->andFilterWhere(['role' => $this->role]);
+        $query->andFilterWhere(['status' => $this->status]);
+
         $query->andFilterWhere(['ilike', 'name', $this->name])
             ->andFilterWhere(['ilike', 'lastname', $this->lastname])
             ->andFilterWhere(['ilike', 'email', $this->email])
@@ -76,11 +81,14 @@ class UsuarioSearch extends Usuario
             ->andFilterWhere(['ilike', 'identification', $this->identification])
             ->andFilterWhere(['ilike', 'cod_country', $this->cod_country])
             ->andFilterWhere(['ilike', 'usercode', $this->usercode])
-            ->andFilterWhere(['ilike', 'role', $this->role])
-            ->andFilterWhere(['ilike', 'status', $this->status])
+            //->andFilterWhere(['ilike', 'role', $this->role])
+            //->andFilterWhere(['ilike', 'status', $this->status])
             ->andFilterWhere(['ilike', 'active_desc', $this->active_desc])
             ->andFilterWhere(['ilike', 'auth_key', $this->auth_key])
             ->andFilterWhere(['ilike', 'access_token', $this->access_token]);
+
+            //$query->andWhere(['not in', 'role', ['admin', 'cliente']]);
+
 
         return $dataProvider;
     }

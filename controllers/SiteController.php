@@ -13,6 +13,8 @@ use app\models\Usuario;
 use app\controllers\GlobalController;
 
 
+use yii\db\Query;
+
 class SiteController extends Controller
 {
     /**
@@ -68,7 +70,33 @@ class SiteController extends Controller
             return $this->redirect(['login']);
         }
 
-        return $this->render('index');
+
+        // Grafica
+        $data = (new Query())
+            ->select([
+                'p.name AS product',
+                'SUM(ii.quantity) AS total_products'
+            ])
+            ->from('invoice_item ii')
+            ->innerJoin('product p', 'p.id = ii.product_id')
+            ->groupBy('p.id, p.name')
+            ->orderBy(['total_products' => SORT_DESC])
+            ->all();
+
+        $labels = [];
+        $values = [];
+
+        foreach ($data as $row) {
+            $labels[] = $row['product'];
+            $values[] = (int)$row['total_products'];
+        }
+
+        return $this->render('index', [
+            'labels' => json_encode($labels),
+            'values' => json_encode($values),
+        ]);
+        // fin GRAFICA
+
     }
 
     public function actionRegister()
@@ -78,16 +106,24 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             // valores por defecto
-            $model->role = Usuario::ROLE_DISTRIBUTOR;
+            $model->role = Usuario::ROLE_CLIENTE;
             $model->status = Usuario::STATUS_PENDING;
             $model->active = 1;
             $model->usercode = GlobalController::generateUserCode($model->name);
             // ⚠️ IMPORTANTE: hashear password
             $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            $model->auth_key = Yii::$app->security->generateRandomString();
 
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Registro exitoso. Espera aprobación.');
-                return $this->redirect(['site/login']);
+                // return $this->redirect(['site/login']);
+
+                // 🔥 AUTO LOGIN                
+                $usuario = Usuario::findOne($model->id); // o como lo obtengas
+                $identity = new \app\models\User($usuario);
+                Yii::$app->user->login($identity);
+                
+                return $this->redirect(['site/index']);
             } else {
 
                 Yii::$app->session->setFlash('error', 'Error en el registro. Por favor, verifica los datos.');
