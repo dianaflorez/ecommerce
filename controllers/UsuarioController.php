@@ -16,6 +16,8 @@ use app\models\User;
 use yii\filters\AccessControl;
 use Yii;
 
+use yii\helpers\Url;
+
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
  */
@@ -187,36 +189,78 @@ class UsuarioController extends Controller
         ]);
     }
 
-    public function actionReferrals()
-    {
-        $user = Yii::$app->user->identity;
 
-        // Primer nivel
-        $children = Usuario::find()
-            ->where(['parent_id' => $user->id])
-            ->all();
+    public $binario =[];
 
-        $data = [];
+    function hijobinario($usuarios, $id){
+      $hijos = [];
+      foreach ($usuarios as $value) {
+        if($value["parent_id"] == $id ){
+          array_push($this->binario, $value);
+          $hijos = $this->hijobinario($usuarios, $value["id"]);
+        }
+      }
+      return $hijos;
+    }
+    public function actionReferrals($msg = null, $id = null){
+        $this->layout='main';
 
-        // Nodo raíz
-        $data[] = [
-            'id' => $user->id,
-            'name' => $user->name . ' ' . $user->lastname,
-        ];
+        if(Yii::$app->user->identity->role != 'admin' || $id == null){
+            $id = Yii::$app->user->identity->id;
+        } 
 
-        // Hijos
-        foreach ($children as $child) {
-            $data[] = [
-                'id' => $child->id,
-                'name' => $child->name . ' ' . $child->lastname,
-                'parent' => $user->id,
-            ];
+        if(Yii::$app->user->identity->role == 'admin' || $id == null){
+            $id = Usuario::find()->where(['role' => 'distributor'])->orderBy('id ASC')->one()->id;
+        } 
+
+        $model = Usuario::findOne($id);
+        $usuprimero = $model;
+
+
+        $usuario = Usuario::find()->andWhere("role='distributor'")->all();
+        
+        // $usuario = Usuario::find()->andWhere('id>='.$id)->orderBy(['position_binario' => SORT_DESC])->all();
+        
+        //$usuario = GlobalController::hijosinfBinario($id);
+        //$out=[['v' => '..'],'Mike', 'VP'];
+
+        array_push($this->binario, $usuprimero);
+
+        $hijos = $this->hijobinario($usuario, $id);
+
+        $out=[];
+        $swprimero = 1;
+        $avatarDefault = Url::base()."/images/user.png";
+
+        foreach ($this->binario as $value) {
+            //$avatar = $value["avatar"] ? Url::base()."/archivos/".$value["avatar"] : $avatarDefault;
+            $avatar =  $avatarDefault;
+            
+            //$out [] = [  'v'=> $value["name"]  ,'Mike', 'VP'];
+            $nombre = $value["name"].' '.$value["lastname"];
+            $idusuario = (string)$value["id"];
+            //$lado = strtoupper($value["position_binario"]);
+            //$padre = Usuario::findOne($value["id_padre_inscripcion_uninivel"]);
+            //$padre_row = Usuario::findOne($value["id_padre_inscripcion_uninivel"]);
+            //$padre = $padre_row["name"].' '.$padre_row["lastname"];
+            $padre = (string) $value["parent_id"];
+            if($swprimero == 1){
+                $padre = '';
+                $swprimero ++;
+            }
+            array_push($out, [['v'=>$idusuario, 'f' => '<img src="'.$avatar.'" height="42" /><br/> <strong>' . $nombre .' '.$idusuario.' '. '</strong><br/>' . '<br>' . $value["usercode"] .''],  $padre , $nombre]);
+
         }
 
         return $this->render('referrals', [
-            'data' => $data,
-        ]);
+                                        'model' => $model,
+                                        "msg"   => $msg,
+                                        "out"   => $out,
+                                        "usuarios" => $usuario
+                                ]);
     }
+
+        
 
     public function actionReferralsChart()
     {

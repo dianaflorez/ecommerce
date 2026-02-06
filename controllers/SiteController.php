@@ -84,6 +84,7 @@ class SiteController extends Controller
             ])
             ->count();
         
+        $ventasxpais = GlobalController::ventasxPais();
     
 
         // Grafica
@@ -112,6 +113,7 @@ class SiteController extends Controller
             'referrals' => $referrals,
             'totalReferidos' => $totalReferidos,
             'totalReferidosDistribuidores' => $totalReferidosDistribuidores,
+            'ventasxpais' => $ventasxpais,
         ]);
         // fin GRAFICA
 

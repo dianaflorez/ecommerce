@@ -63,6 +63,38 @@
             return  $rows;
         }
 
+        public static function ventasxpais(){
+            $sql = "
+           SELECT
+                country,
+                vendedor,
+                total_vendido
+            FROM (
+                SELECT
+                    c.nombre AS country,
+                    u.cod_country,
+                    u.name || ' ' || u.lastname AS vendedor,
+                    SUM(ii.quantity * ii.price) AS total_vendido,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY u.cod_country
+                        ORDER BY SUM(ii.quantity * ii.price) DESC
+                    ) AS ranking
+                FROM invoice i
+                JOIN usuario u ON u.id = i.user_id
+                JOIN invoice_item ii ON ii.invoice_id = i.id
+                JOIN country c ON c.cod_country = u.cod_country
+                -- WHERE i.status = 'paid'
+                GROUP BY u.cod_country, c.nombre, vendedor
+            ) ranked
+            WHERE ranking = 1
+            ORDER BY total_vendido DESC";
+
+
+            $rows = Yii::$app->db->createCommand($sql)->queryAll();
+            return $rows;
+
+        }
+
 
 
         
