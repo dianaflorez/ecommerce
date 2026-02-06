@@ -222,9 +222,19 @@ class UsuarioController extends Controller
     {
         $user = Yii::$app->user->identity;
 
-        // todos los referidos
-        $all = Usuario::find()->andWhere("role='distributor'")->all();
+        if($user->role == 'distributor') {
+            // Solo referidos directos
+            $all = Usuario::find()
+                ->where(['id' => $user->id])               // el padre
+                ->orWhere(['parent_id' => $user->id])      // los hijos
+                ->andWhere(['role' => 'distributor'])
+                ->all();
 
+        } else {
+             // todos los referidos
+            $all = Usuario::find()->andWhere("role='distributor'")->all();
+        }
+        
         $nodes = [];
         foreach ($all as $u) {
             $nodes[] = [

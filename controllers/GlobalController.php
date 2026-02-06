@@ -1,6 +1,7 @@
 <?php    
     namespace app\controllers;
     use Yii;
+    use yii\db\Query;
     
     class GlobalController extends \yii\web\Controller
     {
@@ -34,12 +35,32 @@
             return $code;
         }
 
-        public function beforeSave($insert)
+        // public function beforeSave($insert)
+        // {
+        //     if ($insert && empty($this->usercode)) {
+        //         $this->usercode = $this->generateUserCode();
+        //     }
+        //     return parent::beforeSave($insert);
+        // }
+
+        public static function referralsSales($userId)
         {
-            if ($insert && empty($this->usercode)) {
-                $this->usercode = $this->generateUserCode();
-            }
-            return parent::beforeSave($insert);
+
+            $rows = (new Query())
+                ->select([
+                    'u.name AS referido',
+                    'i.created_at AS fecha',
+                    'i.id AS invoice_id',
+                    'i.total AS valor',
+                    '(i.total * 0.05) AS comision'
+                ])
+                ->from('invoice i')
+                ->innerJoin('usuario u', 'u.id = i.user_id')
+                ->where(['u.parent_id' => $userId])
+                ->orderBy(['i.created_at' => SORT_DESC])
+                ->all();
+
+            return  $rows;
         }
 
 

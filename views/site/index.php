@@ -142,6 +142,57 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>        
                 </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Referidos</h3>
+                            <p>Total de referidos: <b><?= $totalReferidos ?></b></p>
+                            <p>Referidos activos: <b><?= $totalReferidosDistribuidores ?></b></p>
+
+                            <h3>📊 Compras de mis referidos</h3>
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Fecha</th>
+                                        <th>No. Factura</th>
+                                        <th>Valor</th>
+                                        <th>Comisión 5%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php if (empty($referrals)): ?>
+                                    <tr>
+                                        <td colspan="6" class="text-center">No hay compras aún</td>
+                                    </tr>
+                                <?php endif; ?>
+
+                                <?php 
+                                $total = 0;
+                                foreach ($referrals as $row): $total = $total + $row['comision']; ?>
+                                    <tr>
+                                        <td><?= Html::encode($row['referido']) ?></td>
+                                        <td><?= date('Y-m-d', strtotime($row['fecha'])) ?></td>
+                                        <td>#<?= $row['invoice_id'] ?></td>
+                                        <td>$<?= number_format($row['valor'], 2) ?></td>
+                                        <td class="text-right">
+                                            <span class="text-success">
+                                                $<?= number_format($row['comision'], 2) ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                    <tr>
+                                        <td colspan="5" class="text-right"><b>Total: <?= number_format($total, 2)  ?></b></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
 
         <?php endif; ?>

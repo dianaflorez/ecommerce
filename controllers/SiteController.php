@@ -70,6 +70,21 @@ class SiteController extends Controller
             return $this->redirect(['login']);
         }
 
+        // Compras referidos
+        $referrals = GlobalController::referralsSales(Yii::$app->user->id);
+        $totalReferidos = Usuario::find()
+            ->where(['parent_id' => Yii::$app->user->id])
+            ->count();
+
+        $totalReferidosDistribuidores = Usuario::find()
+            ->where([
+                'parent_id' => Yii::$app->user->id,
+                'role' => 'distributor',
+                'active' => 1
+            ])
+            ->count();
+        
+    
 
         // Grafica
         $data = (new Query())
@@ -94,6 +109,9 @@ class SiteController extends Controller
         return $this->render('index', [
             'labels' => json_encode($labels),
             'values' => json_encode($values),
+            'referrals' => $referrals,
+            'totalReferidos' => $totalReferidos,
+            'totalReferidosDistribuidores' => $totalReferidosDistribuidores,
         ]);
         // fin GRAFICA
 
