@@ -187,6 +187,61 @@ class UsuarioController extends Controller
         ]);
     }
 
+    public function actionReferrals()
+    {
+        $user = Yii::$app->user->identity;
+
+        // Primer nivel
+        $children = Usuario::find()
+            ->where(['parent_id' => $user->id])
+            ->all();
+
+        $data = [];
+
+        // Nodo raíz
+        $data[] = [
+            'id' => $user->id,
+            'name' => $user->name . ' ' . $user->lastname,
+        ];
+
+        // Hijos
+        foreach ($children as $child) {
+            $data[] = [
+                'id' => $child->id,
+                'name' => $child->name . ' ' . $child->lastname,
+                'parent' => $user->id,
+            ];
+        }
+
+        return $this->render('referrals', [
+            'data' => $data,
+        ]);
+    }
+
+    public function actionReferralsChart()
+    {
+        $user = Yii::$app->user->identity;
+
+        // todos los referidos
+        $all = Usuario::find()->andWhere("role='distributor'")->all();
+
+        $nodes = [];
+        foreach ($all as $u) {
+            $nodes[] = [
+                'id' => $u->id,
+                'pid' => $u->parent_id ?? null,
+                'name' => $u->fullName,
+                'title' => $u->parent_id ? 'Referido de ' . ($u->parent->fullName ?? 'N/A') : 'Usuario Raíz',
+            ];
+        }
+
+
+        return $this->render('referrals-chart', [
+            'data' => json_encode($nodes),
+        ]);
+    }
+
+
     /**
      * Deletes an existing Usuario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

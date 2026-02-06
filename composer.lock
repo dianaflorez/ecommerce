@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f23dee4553535c168da4dfeba32250a2",
+    "content-hash": "4bdb3c4a29cbf821f885064008f4b0fb",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -471,6 +471,56 @@
                 "source": "https://github.com/FortAwesome/Font-Awesome/tree/v4.7.0"
             },
             "time": "2016-10-24T15:52:54+00:00"
+        },
+        {
+            "name": "kongoon/yii2-orgchart",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kongoon/yii2-orgchart.git",
+                "reference": "689403572f31b8b33d04b26fb96f98d243427a04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kongoon/yii2-orgchart/zipball/689403572f31b8b33d04b26fb96f98d243427a04",
+                "reference": "689403572f31b8b33d04b26fb96f98d243427a04",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kongoon\\orgchart\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Manop Kongoon",
+                    "email": "kongoon@gmail.com",
+                    "homepage": "https://www.programmerthailand.com/"
+                }
+            ],
+            "description": "Google Visualization OrgChart for Yii Framework 2.0",
+            "homepage": "https://github.com/kongoon/yii2-orgchart",
+            "keywords": [
+                "OrgChart",
+                "extension",
+                "google",
+                "visualization",
+                "yii",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kongoon/yii2-orgchart/issues",
+                "source": "https://github.com/kongoon/yii2-orgchart/tree/master"
+            },
+            "time": "2016-05-23T09:14:15+00:00"
         },
         {
             "name": "mervick/material-design-icons",

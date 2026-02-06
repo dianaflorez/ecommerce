@@ -43,6 +43,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/ricar2ce/yii
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> -->
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+
+    
+
     <?php $this->head() ?>
 </head>
 	<!-- <body class="sidebar-mini"> -->

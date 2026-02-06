@@ -44,14 +44,18 @@ class Menu
                     ['label' => 'Invoices', 'icon' => 'receipt_long', 'url' => ['invoice/index'], 'visible' => $products],
                    
                     // Menu Admin
-                    ['label' => 'Administrador', 'icon' => 'people', 'visible' => $showAdmin, 
+                    ['label' => 'Administrador', 'icon' => 'settings', 'visible' => $showAdmin, 
                         'items' => [
-                            ['label' => 'Usuarios', 'icon' => 'person', 'url' => ['usuario/index'], 'visible' => $showUsuarios],
+                            ['label' => 'Usuarios', 'icon' => 'people', 'url' => ['usuario/index'], 'visible' => $showUsuarios],
                             ['label' => 'Products', 'icon' => 'shopping_cart', 'url' => ['product/index']],
                             //['label' => 'Usuario/Contratos', 'icon' => 'person', 'url' => ['usuariocontrato/index'], 'visible' => $showUsuarios],
                             //['label' => 'All User', 'icon' => 'person', 'url' => ['usuario/indexall'], 'visible' => $showUsuariosAll],
                             //['label' => 'Empresas', 'icon' => 'business', 'url' => ['empresa/index']],
                     ]],
+                    ['label' => 'Referidos', 'icon' => 'people_outline', 'url' => ['usuario/referrals-chart'], 'visible' => $products],
+                    ['label' => 'Referidos', 'icon' => 'group', 'url' => ['usuario/referrals'], 'visible' => $products],
+
+                    
                  
                     // [ 'label' => 'Fuecs', 'icon' => 'assignment_turned_in', 'url' => ['/fuec/index'], 'visible' => $showFUEC ],
 
