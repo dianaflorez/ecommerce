@@ -99,9 +99,19 @@ class SiteController extends Controller
 
     }
 
-    public function actionRegister()
+    public function actionRegister($id = null)
     {
         $model = new Usuario();
+        if($id !== null){
+            $padre= Usuario::findOne($id);
+        }
+        $refUserId = Yii::$app->session->get('ref_user_id');
+        if ($refUserId) {
+            $model->parent_id = $refUserId;
+            $padre= Usuario::findOne($refUserId);
+
+        }
+
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -135,8 +145,27 @@ class SiteController extends Controller
 
         return $this->render('register', [
             'model' => $model,
+            'padre' => $padre ?? null,
         ]);
     }
+
+    public function actionReferral($code)
+    {
+        $user = Usuario::find()
+            ->where(['usercode' => $code, 'active' => 1])
+            ->one();
+
+        if (!$user) {
+            throw new \yii\web\NotFoundHttpException('Referido no válido');
+        }
+
+        // Guardar referido en sesión
+        Yii::$app->session->set('ref_user_id', $user->id);
+
+        // Redirigir al registro
+        return $this->redirect(['site/register']);
+    }
+
 
     /**
      * Login action.

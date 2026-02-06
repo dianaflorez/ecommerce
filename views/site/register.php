@@ -17,7 +17,10 @@ $this->title = 'Registro';
             <?php $form = ActiveForm::begin(); ?>
 
             <div class="card-body">
-                <br>
+                <?php if($padre) {
+                    echo '<h3><b> Referido por '.$padre->fullName.'</b></h3>';    
+                    echo $form->field($model, 'parent_id')->hiddenInput(['value' => $padre->id])->label(false);
+                } ?>
                 <?= $form->field($model, 'name')->textInput() ?>
                 <?= $form->field($model, 'lastname')->textInput() ?>
                 <?= $form->field($model, 'identification')->textInput() ?>

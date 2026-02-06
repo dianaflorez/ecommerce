@@ -1,71 +1,86 @@
 <?php
+
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+/** @var yii\web\View $this */
+/** @var app\models\Product $model */
+
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<div class="product-view container mt-4">
 
-<div class="container">
-<div class="row justify-content-center">
-<div class="col-md-10">
-<div class="card">
+    <div class="row">
 
+        <!-- COLUMNA IZQUIERDA: IMAGEN -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
 
-<!-- Imagen -->
-<div class="card-header card-header-image" style="height:360px; overflow:hidden;">
-<img src="<?= Url::base(true) ?>/archivos/products/<?= Html::encode($model->image) ?>"
-style="width:100%; height:100%; object-fit:cover;">
-</div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img 
+                                src="<?= Url::base(true) . '/archivos/products/' . $model->image ?>" 
+                                alt="<?= Html::encode($model->name) ?>"
+                                class="img-fluid product-detail-img"
+                            >
+                        </div>
 
+                        <!-- COLUMNA DERECHA: INFO -->
+                        <div class="col-md-8 text-center">
+                            <div class="card">
+                                <div class="card-body">
 
-<!-- Contenido -->
-<div class="card-body">
-<h3 class="card-title">
-<?= Html::encode($model->name) ?>
-</h3>
+                                    <h2 class="title"><b><?= Html::encode($model->name) ?></b></h2>
 
+                                    <h3 class="text-success">
+                                        <b>$<?= number_format($model->price, 2, '.', ',') ?></b>
+                                    </h3>
 
-<h4 class="text-success">
-$<?= number_format($model->price, 2, '.', ',') ?>
-</h4>
+                                    <hr>
 
+                                    <?php if ($model->description): ?>
+                                        <p>
+                                            <strong>Descripción:</strong><br>
+                                            <?= nl2br(Html::encode($model->description)) ?>
+                                        </p>
+                                    <?php endif; ?>
 
-<?php if ($model->description): ?>
-<p class="card-description">
-<?= nl2br(Html::encode($model->description)) ?>
-</p>
-<?php endif; ?>
+                                    <div class="mt-4">
+                                        <?= Html::a(
+                                            '<i class="material-icons">shopping_cart</i> Agregar al carrito',
+                                            ['invoice/add-to-cart', 'id' => $model->id],
+                                            ['class' => 'btn btn-success btn-round']
+                                        ) ?>
 
+                                        <?= Html::a(
+                                            Html::img(
+                                                Yii::getAlias('@web/images/wpicon.png'),
+                                                [
+                                                    'alt' => 'WhatsApp',
+                                                    'style' => 'width:38px; margin-right:0px; vertical-align:middle; background-color: white; border-radius: 80%;'
+                                                ]
+                                            ) . ' Preguntar',
+                                            'https://api.whatsapp.com/send?phone=57',
+                                            [
+                                                'class' => 'btn btn-link',
+                                                'target' => '_blank'
+                                            ]
+                                        ) ?>
 
-<hr>
+                                    </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- Acciones -->
-<div class="d-flex gap-2">
-<?= Html::a(
-'<i class="material-icons">shopping_cart</i> Comprar',
-['cart/add', 'id' => $model->id],
-['class' => 'btn btn-success', 'encode' => false]
-) ?>
+    </div>
 
-
-<?= Html::a(
-'<i class="fa-brands fa-whatsapp"></i> Preguntar',
-'https://api.whatsapp.com/send?phone=57&text=Hola, estoy interesado en el producto: ' . urlencode($model->name),
-['class' => 'btn btn-info', 'target' => '_blank', 'encode' => false]
-) ?>
-</div>
-</div>
-
-
-<!-- Footer -->
-<div class="card-footer">
-<small class="text-muted">
-Creado el <?= Yii::$app->formatter->asDate($model->created_at) ?>
-</small>
-</div>
-
-
-</div>
-</div>
-</div>
 </div>

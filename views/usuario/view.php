@@ -43,7 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->cod_country ? $model->codCountry->nombre : '',
             ],
             'usercode',
-            'parent_id',
+            // 'parent_id',
+            [
+                'label' => 'Referido por',
+                'value' => $model->parent_id && $model->parent ? $model->parent->fullname : '',
+            ],
             'role',
             'status',
             'active:boolean',

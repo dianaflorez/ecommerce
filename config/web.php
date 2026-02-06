@@ -82,6 +82,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'r/<code:[a-z0-9\-]+>' => 'site/referral',
                 '/' => 'site/index',
                 'login' => 'site/login',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
