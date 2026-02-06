@@ -141,8 +141,22 @@ class UsuarioController extends Controller
         );
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+
+                if($model->save()){
+                    Yii::$app->session->setFlash('success', 'Registro exitoso. Espera aprobación.');
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+
+                } else {
+                    $error = json_encode( $model->getErrors() );
+                    $msg = "No se pudo guardar la información $error";
+                    Yii::$app->session->setFlash('error', 'Error al guardar el usuario. '.$msg);
+
+                }
+
             }
         } else {
             $model->loadDefaultValues();
@@ -188,6 +202,34 @@ class UsuarioController extends Controller
             'listaUsuarios' => $listaUsuarios,
         ]);
     }
+
+    // CAMBIAR CLAVE
+    public function actionCambiarClave($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $nuevaClave = Yii::$app->request->post('nueva_clave');
+
+            if (!empty($nuevaClave)) {
+                $model->password = Yii::$app->security
+                    ->generatePasswordHash($nuevaClave);
+
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'Clave actualizada');
+                    return $this->redirect(['index']);
+                }
+            }
+
+            Yii::$app->session->setFlash('error', 'La clave no puede estar vacía');
+        }
+
+        return $this->render('cambiar-clave', [
+            'model' => $model,
+        ]);
+    }
+
+
 
 
     public $binario =[];

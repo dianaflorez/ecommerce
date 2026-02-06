@@ -165,7 +165,7 @@ class ProductController extends Controller
                 } else {
                     $error = json_encode( $model->getErrors() );
                     $msg = "No se pudo editar la información $error";
-                    Yii::$app->session->setFlash('error', 'Error al guardar el conductor. '.$msg);
+                    Yii::$app->session->setFlash('error', 'Error al guardar. '.$msg);
 
                 }
             } else {

@@ -130,7 +130,7 @@ class SiteController extends Controller
             $model->parent_id = $refUserId;
             $padre= Usuario::findOne($refUserId);
 
-        }
+        } 
 
 
         if ($model->load(Yii::$app->request->post())) {

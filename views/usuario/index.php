@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'password',
             //'phone',
             //'document_number',
-            'cod_country',
+            //'cod_country',
             //'parent_id',
             // 'role',
             // 'status',
@@ -69,7 +69,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Usuario $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+                 'template' => '{view} {update} {claveusu}',
+                  'buttons' => [
+                    'claveusu' => function ($url, $model) {
+                        return Html::a(
+                            '<i class="material-icons">lock</i>',
+                            ['usuario/cambiar-clave', 'id' => $model->id],
+                            [
+                                'title' => 'Cambiar clave',
+                                'data-pjax' => '0',
+                            ]
+                        );
+                    },
+                    'updateanfitrion' => function ($url, $model) {
+                      return Html::a(
+                        '<i class="material-icons">sensor_occupied</i>',
+                        $url);
+                    },
+                  ],
+
             ],
         ],
     ]); ?>
