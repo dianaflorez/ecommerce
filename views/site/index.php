@@ -113,7 +113,40 @@ $this->params['breadcrumbs'][] = $this->title;
                         </table>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-chart">
+                        <div class="card-header card-header-warning">
+                            <div class="ct-chart" id="websiteViewsChart"></div>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Email Subscriptions</h4>
+                            <p class="card-category">Last Campaign Performance</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i> campaign sent 2 days ago
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-chart">
+                        <div class="card-header card-header-danger">
+                        <div class="ct-chart" id="completedTasksChart"></div>
+                        </div>
+                        <div class="card-body">
+                        <h4 class="card-title">Completed Tasks</h4>
+                        <p class="card-category">Last Campaign Performance</p>
+                        </div>
+                        <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> campaign sent 2 days ago
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         <!-- DISTRIBUIDOR -->
@@ -242,3 +275,39 @@ function copyRefLink() {
     alert('Link copiado al portapapeles');
 }
 </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    new Chartist.Line('#websiteViewsChart', {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        series: [
+            [120, 150, 180, 170, 200, 230, 250]
+        ]
+    }, {
+        low: 0,
+        showArea: true,
+        fullWidth: true,
+        chartPadding: {
+            right: 40
+        }
+    });
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
