@@ -18,6 +18,8 @@ use Yii;
 
 use yii\helpers\Url;
 
+use Mpdf\Mpdf;
+
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
  */
@@ -201,6 +203,26 @@ class UsuarioController extends Controller
             'model' => $model,
             'listaUsuarios' => $listaUsuarios,
         ]);
+    }
+
+    public function actionContrato($id)
+    {
+        $model = $this->findModel($id);
+
+        $html = $this->renderPartial('contrato-pdf', [
+            'model' => $model,
+        ]);
+
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+        ]);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output(
+            'Contrato_'.$model->usercode.'.pdf',
+            \Mpdf\Output\Destination::INLINE
+        );
     }
 
     // CAMBIAR CLAVE

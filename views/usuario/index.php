@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <p>
         <?= Html::a('Create Usuario', ['create'], ['class' => 'btn btn-success']) ?>
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, Usuario $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  },
-                 'template' => '{view} {update} {claveusu}',
+                 'template' => '{view} {update} {claveusu} {contrato}',
                   'buttons' => [
                     'claveusu' => function ($url, $model) {
                         return Html::a(
@@ -86,6 +86,16 @@ $this->params['breadcrumbs'][] = $this->title;
                       return Html::a(
                         '<i class="material-icons">sensor_occupied</i>',
                         $url);
+                    },
+                    'contrato' => function ($url, $model) {
+                        return Html::a(
+                            '<i class="material-icons">description</i>',
+                            ['usuario/contrato', 'id' => $model->id],
+                            [
+                                'title' => 'Generar contrato',
+                                'target' => '_blank', // abre el PDF en nueva pestaña
+                            ]
+                        );
                     },
                   ],
 
