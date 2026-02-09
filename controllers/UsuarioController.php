@@ -20,6 +20,12 @@ use yii\helpers\Url;
 
 use Mpdf\Mpdf;
 
+$mpdf = new Mpdf([
+    'mode' => 'utf-8',
+    'format' => 'A4',
+    'tempDir' => Yii::getAlias('@runtime/mpdf'),
+]);
+
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
  */
