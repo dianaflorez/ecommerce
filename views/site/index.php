@@ -199,13 +199,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="card">
                         <div class="card-body">
                             <h3>Resumen de Ventas</h3>
-                            <p>Total de ventas realizadas: <b><?php // $totalSales ?></b></p>
-                            <p>Comisión acumulada: <b>$<?php // number_format($totalCommission, 2, '.', ',') ?></b></p>
+                            <p>Total de ventas realizadas: <b><?= $referralsTotal['cantidad_ventas'] ?></b></p>
+                            <p>Ventas: <b>$<?= number_format($referralsTotal['total_ventas'], 2, '.', ',') ?></b></p>
+                            <p>Comisión acumulada: <b>$<?= number_format($referralsTotal['total_comision'], 2, '.', ',') ?></b></p>
+
+                            
                         </div>
                     </div>        
                 </div>
 
-                <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-8 col-md-8 col-sm-12">
                     <div class="card">
                         <div class="card-body">
                             <h3>Referidos</h3>
@@ -239,7 +242,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td><?= Html::encode($row['referido']) ?></td>
                                         <td><?= date('Y-m-d', strtotime($row['fecha'])) ?></td>
                                         <td>#<?= $row['invoice_id'] ?></td>
-                                        <td>$<?= number_format($row['valor'], 2) ?></td>
+                                        <td class="text-right">$<?= number_format($row['valor'], 2) ?></td>
                                         <td class="text-right">
                                             <span class="text-success">
                                                 $<?= number_format($row['comision'], 2) ?>
@@ -255,7 +258,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             </table>
                         </div>
                     </div>
-            </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h4><b>PUBLICIDAD</b></h4>
+                            <video width="210" controls>
+                                <source src="images/ALCALINEMAXA.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+                    </div>        
+                </div>
 
         <?php endif; ?>
 

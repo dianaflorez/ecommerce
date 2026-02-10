@@ -72,6 +72,8 @@ class SiteController extends Controller
 
         // Compras referidos
         $referrals = GlobalController::referralsSales(Yii::$app->user->id);
+        $referralsTotal = GlobalController::referralsSalesTotal(Yii::$app->user->id);
+
         $totalReferidos = Usuario::find()
             ->where(['parent_id' => Yii::$app->user->id])
             ->count();
@@ -114,6 +116,7 @@ class SiteController extends Controller
             'totalReferidos' => $totalReferidos,
             'totalReferidosDistribuidores' => $totalReferidosDistribuidores,
             'ventasxpais' => $ventasxpais,
+            'referralsTotal' => $referralsTotal,
         ]);
         // fin GRAFICA
 

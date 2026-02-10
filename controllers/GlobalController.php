@@ -63,6 +63,21 @@
             return  $rows;
         }
 
+        public static function referralsSalesTotal($userId)
+        {
+            return (new Query())
+                ->select([
+                    'cantidad_ventas' => 'COUNT(i.id)',
+                    'total_ventas' => 'SUM(i.total)',
+                    'total_comision' => 'SUM(i.total * 0.05)',
+                ])
+                ->from('invoice i')
+                ->innerJoin('usuario u', 'u.id = i.user_id')
+                ->where(['u.parent_id' => $userId])
+                ->one();
+        }
+
+
         public static function ventasxpais(){
             $sql = "
            SELECT
