@@ -215,7 +215,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <p>Total de referidos: <b><?= $totalReferidos ?></b></p>
                             <p>Referidos activos: <b><?= $totalReferidosDistribuidores ?></b></p>
 
-                            <h3>📊 Compras de mis referidos</h3>
+                            <h3>📊 Compras de mis referidos...</h3>
 
                             <table class="table table-bordered table-striped">
                                 <thead>
