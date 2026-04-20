@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="mt-4">
                                         <?= Html::a(
                                             '<i class="material-icons">shopping_cart</i> Agregar al carrito',
-                                            ['invoice/add-to-cart', 'id' => $model->id],
+                                            ['invoice/cart', 'id' => $model->id],
                                             ['class' => 'btn btn-success btn-round']
                                         ) ?>
 

@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 </td>
                                 <td>
-                                   <a href="#jacket"><?= $c['item_name'] ?></a>
+                                    <a href="../../product/info/<?= $c['product_id'] ?>"><?= $c['item_name'] ?></a>
                                    <br><small><?= isset($c['main_desc']) ? $c['main_desc'] : '' ?></small>
                                 </td>
                                 <td class="td-number text-right" >
