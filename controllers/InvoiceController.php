@@ -31,7 +31,7 @@ class InvoiceController extends Controller
       return [
         'access' => [
             'class' => AccessControl::className(),
-            'only' => ['index', 'create', 'update','view','cart', 'viewinvoice'],
+            'only' => ['index', 'create', 'update','view', 'viewinvoice'],
             'rules' => [
                 [
                    //Los usuarios simples tienen permisos sobre las siguientes acciones

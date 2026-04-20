@@ -294,6 +294,39 @@ a.desc:after {
     font-weight: bold !important;
 }
 
+.btn-enlace {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.btn-enlace:active {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.navbar.bg-blue{
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav-item-blue{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar .collapse .navbar-nav .nav-item .nav-link {
+    
+    font-size: 16px;
+}
+
+.navbar .navbar-brand{
+    font-size: 24px;
+    font-weight: bold;
+}
+
 
 .cart-badge {
     animation: pop 0.25s ease;

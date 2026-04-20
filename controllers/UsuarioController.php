@@ -35,11 +35,11 @@ class UsuarioController extends Controller
       return [
         'access' => [
             'class' => AccessControl::className(),
-            'only' => ['index', 'update','view'],
+            'only' => ['index', 'update','view', 'referrals'],
             'rules' => [
                 [
                    //Los usuarios simples tienen permisos sobre las siguientes acciones
-                   'actions' => ['index', 'update','view'],
+                   'actions' => ['index', 'update','view', 'referrals'],
                    //Esta propiedad establece que tiene permisos
                    'allow' => true,
                    //Usuarios autenticados, el signo ? es para invitados
@@ -53,7 +53,7 @@ class UsuarioController extends Controller
                ],
                 [
                    //Los usuarios simples tienen permisos sobre las siguientes acciones
-                   'actions' => [''],
+                   'actions' => ['referrals'],
                    //Esta propiedad establece que tiene permisos
                    'allow' => true,
                    //Usuarios autenticados, el signo ? es para invitados
@@ -67,7 +67,7 @@ class UsuarioController extends Controller
                ],
                [
                   //Los usuarios simples tienen permisos sobre las siguientes acciones
-                  'actions' => [''],
+                  'actions' => ['referrals'],
                   //Esta propiedad establece que tiene permisos
                   'allow' => true,
                   //Usuarios autenticados, el signo ? es para invitados

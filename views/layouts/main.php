@@ -10,7 +10,14 @@ if (class_exists('rce\material\Assets')) {
     rce\material\Assets::register($this); 
 }
 
-if (Yii::$app->controller->action->id === 'login' || Yii::$app->controller->action->id === 'register') {
+if(!Yii::$app->user->identity && (Yii::$app->controller->action->id === 'products' || Yii::$app->controller->action->id === 'cart')){
+    echo $this->render(
+        'main-menu-horizontal',
+        ['content' => $content]
+    );
+}
+
+elseif (Yii::$app->controller->action->id === 'login' || Yii::$app->controller->action->id === 'register') {
     echo $this->render(
         'main-login',
         ['content' => $content]

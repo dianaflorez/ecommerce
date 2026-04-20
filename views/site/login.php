@@ -77,20 +77,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
             <?php endif; ?>
-            </div>
-            
 
            <div class="card-footer justify-content-center">
                 <?= Html::submitButton('Login', ['class' => 'btn btn-success btn-block btn-border', 'name' => 'login-button']) ?>
                 <?= Html::a(
                     'Registrarse',
                     ['site/register'], // ruta al registro
-                    ['class' => 'btn btn-info btn-block']
+                    ['class' => 'btn btn-info']
                 ) ?>
+                
            </div>
            <div class="card-footer">
+                
            </div>
            <?php ActiveForm::end(); ?>
+        </div>
+        
+    </div>
+    <div>
+        <?= Html::a(
+                'CARRITO DE COMPRAS ejemplo',   
+                ['product/products'], // ruta al registro
+                ['class' => 'btn btn-info btn-block']
+            ) ?>
         </div>
     </div>
 </div>
