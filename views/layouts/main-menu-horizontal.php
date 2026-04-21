@@ -76,6 +76,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/ricar2ce/yii
     ]);
     NavBar::end();
     ?>
+
+    <?php
+    // Muestra el banner solo en la página de inicio
+    if (Yii::$app->controller->id === 'product' && Yii::$app->controller->action->id === 'products') {
+        echo $this->render('//layouts/_banner');
+    }
+    ?>
 </header>
 <br>
 <main id="main" class="flex-shrink-0" role="main">
