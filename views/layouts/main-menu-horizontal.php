@@ -80,7 +80,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/ricar2ce/yii
     <?php
     // Muestra el banner solo en la página de inicio
     if (Yii::$app->controller->id === 'product' && Yii::$app->controller->action->id === 'products') {
-        echo $this->render('//layouts/_banner');
+        // echo $this->render('//layouts/_banner');
+        echo $this->render('//layouts/_carrusel');
     }
     ?>
 </header>
